@@ -14,7 +14,7 @@ test.describe('Finance app browser smoke tests', () => {
       ['settings.html', 'Settings']
     ]) {
       await page.goto('http://127.0.0.1:4173/' + path);
-      await expect(page.getByRole('heading', { name: heading })).toBeVisible();
+      await expect(page.getByRole('heading', { name: heading, exact: true })).toBeVisible();
       await expect(page.locator('#app-shell')).toHaveCount(0); // App is mounted in #app; this also guards against unexpected duplicate shells.
       await expect(page.locator('.app-shell')).toHaveCount(1);
     }
