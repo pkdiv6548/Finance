@@ -33,7 +33,7 @@ test.describe('Finance app browser smoke tests', () => {
     await expect(page.getByText('Browser test expense')).toBeVisible();
     await page.getByPlaceholder('Search description or category').fill('Browser test expense');
     await expect(page.getByText('Browser test expense')).toBeVisible();
-    await expect(page.getByText('1234', { exact: false }).first()).toBeVisible();
+    await expect(page.locator('#txTable')).toContainText('1,234');
   });
 
   test('budget, savings goal, and bill forms save records', async ({ page }) => {
