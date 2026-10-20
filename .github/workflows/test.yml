@@ -1,0 +1,28 @@
+name: Browser tests
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install dependencies
+        run: npm install
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Start static site
+        run: python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/finance-http.log 2>&1 &
+      - name: Run real-browser tests
+        run: npm run test:browser
