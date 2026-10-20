@@ -1,0 +1,21 @@
+# Manual test plan
+
+- [ ] Open `index.html`; dashboard renders without a JavaScript error.
+- [ ] Open every separate page: transactions, budgets, goals, bills, reports, settings.
+- [ ] Add a valid expense and income; dashboard totals update.
+- [ ] Reject empty descriptions, zero/negative amounts and missing dates.
+- [ ] Edit an existing transaction and verify its values persist.
+- [ ] Delete a transaction after the confirmation prompt.
+- [ ] Search transactions by title/category; filter by type and month.
+- [ ] Export CSV; open it and verify the header and rows.
+- [ ] Import a valid CSV; malformed/invalid rows are skipped.
+- [ ] Create and remove a category budget; check spending progress and over-budget style.
+- [ ] Create a savings goal; add savings and verify progress.
+- [ ] Add a bill, toggle paid status and delete a bill.
+- [ ] Verify reports show totals and category spending.
+- [ ] Download JSON backup; restore it and verify records.
+- [ ] Verify invalid JSON backup is rejected.
+- [ ] Verify opening balance changes the overview balance.
+- [ ] Refresh the page; data persists in the same browser.
+- [ ] Test narrow mobile width and keyboard focus for forms/buttons.
+- [ ] Verify no bank credentials or secrets are requested.
