@@ -1,4 +1,4 @@
-name: Browser tests
+name: Test and deploy Finance
 
 on:
   push:
@@ -18,11 +18,43 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: npm
       - name: Install dependencies
         run: npm install
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
       - name: Start static site
-        run: python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/finance-http.log 2>&1 &
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/finance-http.log 2>&1 &
+          echo $! > /tmp/finance-http.pid
+          for i in {1..20}; do
+            if curl --fail --silent http://127.0.0.1:4173/index.html > /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/finance-http.log
+          exit 1
       - name: Run real-browser tests
         run: npm run test:browser
+
+  deploy:
+    needs: browser-tests
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+      contents: read
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
