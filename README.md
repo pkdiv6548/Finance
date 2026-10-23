@@ -42,3 +42,27 @@ The navigation now includes Accounts, Recurring Items, Subscriptions, Debt Manag
 ## Important implementation boundary
 
 These are frontend planning and record-keeping tools, not live financial integrations. Automation rules are not a background job, watchlists do not send alerts, bills do not initiate payments, investments do not fetch market prices, household entries do not create separate user permissions, and reconciliation requires manual balances. Bank connections, authentication, secure cloud sync, encryption-at-rest, server-side storage, real notification delivery, tax filing and payment initiation require a secure backend and/or authorized providers and are not implemented in this static release.
+
+## Expanded modules and local workflows
+
+Dedicated pages now cover Accounts, Recurring Items, Subscriptions, Debt Manager, Investments, Assets & Liabilities, Invoices, Watchlists, Automation Rules, Categories, Refunds, Reconciliation, Household Finance, Notifications, Cash-flow Forecasts, Financial Calendar, Net Worth, Insights, Calculators, Tax Worksheet, Assistant, Data Export, Profile, Privacy and Help.
+
+- Local records can be added, edited, deleted, searched and exported where supported.
+- Custom categories can be used in transaction entry. Enabled rules can automatically assign a category when a new or edited transaction description matches the configured text.
+- Recurring schedules can create a local transaction for a due occurrence. This never initiates a payment.
+- Watchlists show threshold status when opened. They do not send background or remote alerts.
+- Theme and a partial English/Hindi interface preference are stored locally.
+- A PWA manifest, app icon, install prompt and service worker provide install/offline support when the browser supports it and the static site has loaded successfully online.
+
+## Current limitations
+
+This is still a frontend-only demo. It does not implement authentication, secure cloud sync, encrypted financial storage, bank/broker connections, real payment initiation, email/SMS/push delivery, live investment prices, tax filing, or a complete verified tax-liability calculator. The Hindi translation covers common navigation and interface labels, not every sentence on every page. The tax page is a taxable-income worksheet, not tax advice. Forecasts and insights are estimates based on locally entered records.
+
+## Quick verification checklist
+
+1. Open every page from the sidebar and confirm the page title/content loads.
+2. Add/edit/delete a sample transaction and confirm dashboard/report values change.
+3. Add a custom category and a matching automation rule; save a matching transaction and verify the category assignment.
+4. Add a due recurring item and use “Create due transactions” once; confirm it creates a local transaction and advances the next date.
+5. Export JSON and CSV, then restore only after downloading a backup.
+6. Test dark theme, Hindi toggle, mobile navigation, install prompt, and offline fallback in a browser over HTTPS.
