@@ -148,7 +148,7 @@ if(!document.querySelector('link[rel="icon"]')){const icon=document.createElemen
 if('serviceWorker' in navigator && (location.protocol==='https:'||location.hostname==='localhost'))navigator.serviceWorker.register('sw.js').catch(()=>{});
 }
 
-function render(){shell();if(page==='dashboard')renderDashboard();else if(page==='transactions')renderTransactions();else if(page==='budgets')renderBudgets();else if(page==='goals')renderGoals();else if(page==='bills')renderBills();else if(page==='reports')renderReports();else if(page==='settings')renderSettings();else if(extraPages[page])renderAdvanced(page);else renderDashboard();if(page==='dashboard')bindTxActions()applyLanguage()}
+function render(){shell();if(page==='dashboard')renderDashboard();else if(page==='transactions')renderTransactions();else if(page==='budgets')renderBudgets();else if(page==='goals')renderGoals();else if(page==='bills')renderBills();else if(page==='reports')renderReports();else if(page==='settings')renderSettings();else if(extraPages[page])renderAdvanced(page);else renderDashboard();if(page==='dashboard')bindTxActions();applyLanguage()}
 window.addEventListener('storage',e=>{if(e.key==='finance-data-v1'){try{db=JSON.parse(e.newValue)||defaults();render()}catch{}}});
 setupPWA();
 render();
