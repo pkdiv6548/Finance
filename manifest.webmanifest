@@ -1,0 +1,18 @@
+{
+  "name": "Finance — Personal Finance Manager",
+  "short_name": "Finance",
+  "description": "Personal finance planning and local expense tracking.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f7f4",
+  "theme_color": "#1d7654",
+  "icons": [
+    {
+      "src": "assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
