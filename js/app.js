@@ -17,6 +17,8 @@ goals:[{id:uid(),name:'Emergency fund',target:100000,saved:25000,due:''},{id:uid
 bills:[{id:uid(),name:'Internet',amount:799,due:today(),category:'Utilities',paid:false},{id:uid(),name:'Mobile recharge',amount:399,due:today(),category:'Phone',paid:false},{id:uid(),name:'Electricity',amount:1450,due:today(),category:'Utilities',paid:true}],
 settings:{name:'My Finance',currency:'INR',opening:0,theme:'light'}});
 let db; try{db=JSON.parse(localStorage.getItem('finance-data-v1'))||defaults()}catch{db=defaults()}
+for(const key of extraKeys)if(!Array.isArray(db[key]))db[key]=[];
+db.settings={...defaults().settings,...(db.settings||{}),theme:db.settings?.theme||'light'};
 const save=()=>localStorage.setItem('finance-data-v1',JSON.stringify(db));
 const sum=(arr,fn)=>arr.reduce((n,x)=>n+fn(x),0);
 const txMonth=()=>db.transactions.filter(t=>t.date?.startsWith(month()));
