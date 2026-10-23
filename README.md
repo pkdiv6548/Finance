@@ -33,3 +33,12 @@ This is a static site and can be hosted on GitHub Pages or any static hosting se
 
 ## Current limitations
 No user accounts, cloud sync, bank integration, recurring automatic billing, multi-currency support, or server-side storage. Charts are lightweight CSS visuals; reporting is based only on transactions recorded in this browser.
+
+
+## Expanded workspace modules (frontend demo)
+
+The navigation now includes Accounts, Recurring Items, Subscriptions, Debt Manager, Investments, Assets & Liabilities, Invoices & Freelance, Spending Watchlists, Automation Rules, Categories & Tags, Refunds & Reimbursements, Reconciliation, Household Finance, and Notifications. These modules support local create/edit/delete, search, and CSV export where shown. Data is saved in browser storage only.
+
+## Important implementation boundary
+
+These are frontend planning and record-keeping tools, not live financial integrations. Automation rules are not a background job, watchlists do not send alerts, bills do not initiate payments, investments do not fetch market prices, household entries do not create separate user permissions, and reconciliation requires manual balances. Bank connections, authentication, secure cloud sync, encryption-at-rest, server-side storage, real notification delivery, tax filing and payment initiation require a secure backend and/or authorized providers and are not implemented in this static release.
