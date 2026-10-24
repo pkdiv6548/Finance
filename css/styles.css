@@ -26,3 +26,27 @@
 @keyframes panel-in{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
 @media(max-width:720px){.topbar{position:sticky;top:0;z-index:15;padding:8px 0;background:var(--bg)}.sidebar{max-height:100dvh}.nav-list{padding-bottom:8px}.panel-head{flex-wrap:wrap}.table-wrap{max-width:100%}}
+
+/* Mobile header overflow fix: keep the page title and actions in separate, flexible rows. */
+@media(max-width:720px){
+  .topbar{display:grid;grid-template-columns:minmax(0,1fr);align-items:start;gap:12px;width:100%;}
+  .topbar>div:first-child{display:flex;align-items:flex-start!important;gap:10px!important;min-width:0;width:100%;}
+  .topbar>div:first-child>div{flex:1;min-width:0;}
+  .page-title{font-size:clamp(24px,7vw,32px);line-height:1.16;letter-spacing:-.8px;overflow-wrap:anywhere;max-width:100%;}
+  .eyebrow{font-size:11px;letter-spacing:1px;overflow-wrap:anywhere;}
+  .mobile-menu{flex:0 0 auto;margin-top:2px;}
+  .top-actions{display:flex;align-items:center;justify-content:flex-start;flex-wrap:wrap;gap:8px;width:100%;min-width:0;}
+  .top-actions .btn-label{display:inline;}
+  .top-actions .btn{max-width:100%;white-space:normal;}
+  .top-actions #quickAdd{flex:1 1 auto;justify-content:center;}
+  .top-actions #installApp:not(.hide){flex:1 1 auto;justify-content:center;}
+  .top-actions .avatar{flex:0 0 36px;}
+}
+@media(max-width:390px){
+  .main{padding:16px 14px 30px;}
+  .topbar{gap:10px;}
+  .top-actions{gap:7px;}
+  .top-actions .btn{padding:9px 10px;}
+  .top-actions #quickAdd .btn-label{display:none;}
+  .page-title{font-size:clamp(23px,7vw,28px);}
+}
