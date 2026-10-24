@@ -1,5 +1,8 @@
 (() => {
 'use strict';
+// Bust stale GitHub Pages caches so the latest premium motion stylesheet is loaded.
+const motionStylesheet=document.querySelector('link[rel="stylesheet"][href*="css/styles.css"]');
+if(motionStylesheet)motionStylesheet.href='css/styles.css?v=20261024-motion2';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const money=n=>new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',maximumFractionDigits:0}).format(Number(n)||0);
 const today=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;};
