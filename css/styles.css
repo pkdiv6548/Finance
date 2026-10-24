@@ -236,3 +236,32 @@ tbody tr:hover{background:color-mix(in srgb,var(--green2) 50%,transparent);trans
 .toast:not(.hide){animation:ultraReveal .28s ease both}
 @media(max-width:720px){.content>.hero{background-size:auto,320% 320%;animation-duration:16s}.content>.stat-grid>.stat-card{animation-duration:.6s}.content .panel:hover{transform:none}}
 @media(prefers-reduced-motion:reduce){.content>.hero,.content>.hero:before,.content>.hero:after,.content>.stat-grid>.stat-card,.content>.split,.main>.topbar,.page-title:after,.chart-bar,.progress span:after{animation:none!important}.content .panel,.btn,.nav-link,.stat-card,.bar-fill{transition:none!important}}
+
+
+/* Site-wide polish for every Finance module */
+@keyframes moduleRise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes moduleSlide{from{opacity:0;transform:translateX(12px)}to{opacity:1;transform:translateX(0)}}
+@keyframes moduleShine{0%{transform:translateX(-120%)}100%{transform:translateX(220%)}}
+.main .content>.panel,.main .content>.split,.main .content>.goal-list,.main .content>.form-grid,.main .content>.toolbar,.main .content>.notice,.main .content>.settings-list,.main .content>.tx-stat-grid,.main .content>.tx-tools,.main .content>.tx-list-panel{animation:moduleRise .65s cubic-bezier(.2,.7,.2,1) both}
+.main .content>.panel:nth-child(2),.main .content>.split:nth-child(2),.main .content>.goal-list:nth-child(2){animation-delay:.07s}
+.main .content>.panel:nth-child(3),.main .content>.split:nth-child(3),.main .content>.goal-list:nth-child(3){animation-delay:.14s}
+.main .content>.panel:nth-child(4),.main .content>.split:nth-child(4){animation-delay:.21s}
+.goal-item,.bill-item,.settings-row,.tx-stat,.notice,.form-grid .field,.toolbar>*{transition:transform .24s ease,border-color .24s ease,box-shadow .24s ease}
+.goal-item:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--green) 30%,var(--line));box-shadow:0 10px 26px #183a260c}
+.bill-item:hover{background:color-mix(in srgb,var(--green2) 42%,transparent);border-radius:12px;padding-left:9px;padding-right:9px}
+.tx-stat{position:relative;overflow:hidden}
+.tx-stat:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(110deg,transparent 30%,#ffffff24 50%,transparent 70%);transform:translateX(-120%)}
+.tx-stat:hover:after{animation:moduleShine .8s ease}
+.table-wrap{border-radius:12px}
+table tbody tr{animation:moduleSlide .4s ease both}
+table tbody tr:nth-child(2){animation-delay:.035s}
+table tbody tr:nth-child(3){animation-delay:.07s}
+table tbody tr:nth-child(4){animation-delay:.105s}
+table tbody tr:nth-child(5){animation-delay:.14s}
+.pill{transition:transform .2s ease,filter .2s ease}
+.pill:hover{transform:translateY(-1px);filter:saturate(1.15)}
+.field input,.field select,.field textarea,.toolbar input,.toolbar select{transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease}
+.field input:focus,.field select:focus,.field textarea:focus,.toolbar input:focus,.toolbar select:focus{transform:translateY(-1px)}
+.sidebar-note{transition:transform .25s ease,box-shadow .25s ease}
+.sidebar-note:hover{transform:translateY(-2px);box-shadow:0 10px 25px #183a260c}
+@media(prefers-reduced-motion:reduce){.main .content>.panel,.main .content>.split,.main .content>.goal-list,.main .content>.form-grid,.main .content>.toolbar,.main .content>.notice,.main .content>.settings-list,.main .content>.tx-stat-grid,.main .content>.tx-tools,.main .content>.tx-list-panel,table tbody tr{animation:none!important}.goal-item,.bill-item,.settings-row,.tx-stat,.notice,.form-grid .field,.toolbar>*,.sidebar-note{transition:none!important}}
