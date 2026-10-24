@@ -108,13 +108,13 @@
 @keyframes finProgress{from{width:0}to{width:var(--progress,100%)}}
 @keyframes finSpin{to{transform:rotate(360deg)}}
 @keyframes finGlow{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-.app-main{animation:finFadeIn .48s ease both}
-.app-main h1,.app-main h2,.page-heading{animation:finFadeUp .55s cubic-bezier(.2,.7,.2,1) both}
-.app-main .panel,.app-main .card,.app-main .stat-card,.app-main .metric-card,.app-main .chart-card,.app-main .summary-card{animation:finFadeUp .58s cubic-bezier(.2,.7,.2,1) both;transition:transform .28s cubic-bezier(.2,.7,.2,1),box-shadow .28s ease,border-color .28s ease}
-.app-main .panel:nth-of-type(2),.app-main .card:nth-of-type(2),.app-main .stat-card:nth-of-type(2),.app-main .metric-card:nth-of-type(2){animation-delay:.06s}
-.app-main .panel:nth-of-type(3),.app-main .card:nth-of-type(3),.app-main .stat-card:nth-of-type(3),.app-main .metric-card:nth-of-type(3){animation-delay:.12s}
-.app-main .panel:nth-of-type(4),.app-main .card:nth-of-type(4),.app-main .stat-card:nth-of-type(4),.app-main .metric-card:nth-of-type(4){animation-delay:.18s}
-.app-main .panel:hover,.app-main .card:hover,.app-main .stat-card:hover,.app-main .metric-card:hover,.app-main .chart-card:hover,.app-main .summary-card:hover{transform:translateY(-3px);box-shadow:0 16px 38px #1e392612;border-color:#d4e4d8}
+.main{animation:finFadeIn .48s ease both}
+.main h1,.main h2,.page-heading{animation:finFadeUp .55s cubic-bezier(.2,.7,.2,1) both}
+.main .panel,.main .card,.main .stat-card,.main .metric-card,.main .chart-card,.main .summary-card{animation:finFadeUp .58s cubic-bezier(.2,.7,.2,1) both;transition:transform .28s cubic-bezier(.2,.7,.2,1),box-shadow .28s ease,border-color .28s ease}
+.main .panel:nth-of-type(2),.main .card:nth-of-type(2),.main .stat-card:nth-of-type(2),.main .metric-card:nth-of-type(2){animation-delay:.06s}
+.main .panel:nth-of-type(3),.main .card:nth-of-type(3),.main .stat-card:nth-of-type(3),.main .metric-card:nth-of-type(3){animation-delay:.12s}
+.main .panel:nth-of-type(4),.main .card:nth-of-type(4),.main .stat-card:nth-of-type(4),.main .metric-card:nth-of-type(4){animation-delay:.18s}
+.main .panel:hover,.main .card:hover,.main .stat-card:hover,.main .metric-card:hover,.main .chart-card:hover,.main .summary-card:hover{transform:translateY(-3px);box-shadow:0 16px 38px #1e392612;border-color:#d4e4d8}
 .sidebar .brand{animation:finSlideIn .5s ease both}
 .sidebar nav a,.sidebar .nav-link{transition:background .22s ease,color .22s ease,transform .22s ease}
 .sidebar nav a:hover,.sidebar .nav-link:hover{transform:translateX(4px)}
@@ -129,9 +129,9 @@ input,select,textarea{transition:border-color .2s ease,box-shadow .2s ease,backg
 input:focus,select:focus,textarea:focus{outline:none;box-shadow:0 0 0 4px #1d765414}
 .progress,.progress-bar,.budget-progress,.goal-progress{overflow:hidden}
 .progress>span,.progress-bar>span,.budget-progress>span,.goal-progress>span{animation:finProgress 1s cubic-bezier(.2,.7,.2,1) both}
-.chart-bar,.bar,.chart-column,.sparkline-bar{transform-origin:bottom;animation:finBarGrow .8s cubic-bezier(.2,.7,.2,1) both}
-.chart-bar:nth-child(2n),.bar:nth-child(2n),.chart-column:nth-child(2n){animation-delay:.08s}
-.chart-bar:nth-child(3n),.bar:nth-child(3n),.chart-column:nth-child(3n){animation-delay:.16s}
+.chart-bar,.bar,.chart-col,.sparkline-bar{transform-origin:bottom;animation:finBarGrow .8s cubic-bezier(.2,.7,.2,1) both}
+.chart-bar:nth-child(2n),.bar:nth-child(2n),.chart-col:nth-child(2n){animation-delay:.08s}
+.chart-bar:nth-child(3n),.bar:nth-child(3n),.chart-col:nth-child(3n){animation-delay:.16s}
 tbody tr{transition:background-color .2s ease,transform .2s ease}
 tbody tr:hover{background-color:#1d765408}
 .badge,.pill,.status-pill{transition:transform .2s ease,filter .2s ease}
@@ -139,6 +139,6 @@ tbody tr:hover{background-color:#1d765408}
 .modal,.dialog,.drawer{animation:finPop .28s cubic-bezier(.2,.7,.2,1) both}
 .toast,.toast-message{animation:finFadeUp .28s ease both}
 .brand-mark{animation:finPulse 3.5s ease-in-out infinite}
-.app-main .empty,.app-main .empty-state{animation:finFadeIn .7s ease both}
-@media(hover:none){.app-main .panel:hover,.app-main .card:hover,.app-main .stat-card:hover,.app-main .metric-card:hover,.app-main .chart-card:hover,.app-main .summary-card:hover{transform:none}}
+.main .empty,.main .empty-state{animation:finFadeIn .7s ease both}
+@media(hover:none){.main .panel:hover,.main .card:hover,.main .stat-card:hover,.main .metric-card:hover,.main .chart-card:hover,.main .summary-card:hover{transform:none}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
