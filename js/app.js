@@ -2,8 +2,38 @@
 'use strict';
 // Bust stale GitHub Pages caches so the latest premium motion stylesheet is loaded.
 const motionStylesheet=document.querySelector('link[rel="stylesheet"][href*="css/styles.css"]');
-if(motionStylesheet)motionStylesheet.href='css/styles.css?v=20261024-motion2';
-const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+if(motionStylesheet)motionStylesheet.href='css/styles.css?v=20261025-underwater1';
+const $=(s,r=document)=>r.querySelector(s), $=(s,r=document)=>[...r.querySelectorAll(s)];
+/* Subtle pointer-driven water movement. Delegation supports cards rendered after navigation. */
+const waterMotionQuery=window.matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
+if(waterMotionQuery.matches){
+  let waterFrame=0,waterTarget=null,waterPoint=null;
+  document.addEventListener('pointermove',event=>{
+    const card=event.target.closest('.stat-card,.tx-stat,.goal-item,.bill-item,.panel');
+    if(!card||!waterMotionQuery.matches)return;
+    waterTarget=card;waterPoint=event;
+    if(waterFrame)return;
+    waterFrame=requestAnimationFrame(()=>{
+      waterFrame=0;
+      if(!waterTarget||!waterPoint)return;
+      const rect=waterTarget.getBoundingClientRect();
+      const x=(waterPoint.clientX-rect.left)/Math.max(rect.width,1);
+      const y=(waterPoint.clientY-rect.top)/Math.max(rect.height,1);
+      waterTarget.style.setProperty('--water-y',((x-.5)*7).toFixed(2)+'deg');
+      waterTarget.style.setProperty('--water-x',((.5-y)*6).toFixed(2)+'deg');
+      waterTarget.style.setProperty('--water-glow',(x*100).toFixed(1)+'%');
+    });
+  },{passive:true});
+  document.addEventListener('pointerout',event=>{
+    const card=event.target.closest('.stat-card,.tx-stat,.goal-item,.bill-item,.panel');
+    if(!card||card.contains(event.relatedTarget))return;
+    card.style.setProperty('--water-x','0deg');
+    card.style.setProperty('--water-y','0deg');
+    card.style.setProperty('--water-glow','50%');
+    if(waterTarget===card){waterTarget=null;waterPoint=null}
+  },{passive:true});
+}
+
 const money=n=>new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',maximumFractionDigits:0}).format(Number(n)||0);
 const today=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;};
 const month=()=>today().slice(0,7);
