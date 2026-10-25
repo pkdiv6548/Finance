@@ -3,7 +3,7 @@
 // Bust stale GitHub Pages caches so the latest premium motion stylesheet is loaded.
 const motionStylesheet=document.querySelector('link[rel="stylesheet"][href*="css/styles.css"]');
 if(motionStylesheet)motionStylesheet.href='css/styles.css?v=20261025-sidebarfix3';
-const $=(s,r=document)=>r.querySelector(s), $=(s,r=document)=>[...r.querySelectorAll(s)];
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 /* Mobile drawer controls: bind once, outside render(), and always keep dismissal available. */
 function closeFinanceSidebar(){
  const sidebar=document.querySelector('#sidebar');
