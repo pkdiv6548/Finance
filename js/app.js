@@ -2,75 +2,22 @@
 'use strict';
 // Bust stale GitHub Pages caches so the latest premium motion stylesheet is loaded.
 const motionStylesheet=document.querySelector('link[rel="stylesheet"][href*="css/styles.css"]');
-if(motionStylesheet)motionStylesheet.href='css/styles.css?v=20261025-sidebarfix2';
+if(motionStylesheet)motionStylesheet.href='css/styles.css?v=20261025-sidebarfix3';
 const $=(s,r=document)=>r.querySelector(s), $=(s,r=document)=>[...r.querySelectorAll(s)];
-/* Reliable mobile drawer dismissal: backdrop, Escape, and navigation. */
-document.addEventListener('DOMContentLoaded',()=>{
- if(!document.querySelector('.sidebar-backdrop')){
-  const backdrop=document.createElement('button');backdrop.type='button';backdrop.id='sidebarBackdrop';backdrop.className='sidebar-backdrop';backdrop.setAttribute('aria-label','Close navigation');backdrop.hidden=true;document.body.appendChild(backdrop);
- }
- const closeSidebar=()=>{const sidebar=document.querySelector('#sidebar');if(!sidebar)return;sidebar.classList.remove('open');document.body.classList.remove('sidebar-menu-open');document.querySelector('#sidebarBackdrop')?.setAttribute('hidden','');document.querySelector('#menuBtn')?.setAttribute('aria-expanded','false');};
- document.addEventListener('click',event=>{
-  if(event.target.closest('#sidebarBackdrop')){closeSidebar();return;}
-  if(event.target.closest('#sidebar .nav-link'))closeSidebar();
- });
- document.addEventListener('keydown',event=>{if(event.key==='Escape')closeSidebar();});
+/* Mobile drawer controls: bind once, outside render(), and always keep dismissal available. */
+function closeFinanceSidebar(){
+ const sidebar=document.querySelector('#sidebar');
+ sidebar?.classList.remove('open');
+ document.body.classList.remove('sidebar-menu-open');
+ const backdrop=document.querySelector('#sidebarBackdrop');
+ if(backdrop)backdrop.hidden=true;
+ document.querySelector('#menuBtn')?.setAttribute('aria-expanded','false');
+}
+document.addEventListener('click',event=>{
+ if(event.target.closest('#sidebarBackdrop')){closeFinanceSidebar();return;}
+ if(event.target.closest('#sidebar .nav-link'))closeFinanceSidebar();
 });
-
-/* Pointer-triggered water impact ripple controller */
-const financeWaterCards='.main .stat-card,.main .tx-stat,.main .goal-item,.main .bill-item,.main .panel,.main .card,.main .metric-card,.main .chart-card,.main .summary-card';
-if(window.matchMedia('(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference)').matches){
- document.addEventListener('pointerover',event=>{
-  const card=event.target.closest(financeWaterCards);if(!card||card.contains(event.relatedTarget))return;
-  const rect=card.getBoundingClientRect(),x=event.clientX-rect.left,y=event.clientY-rect.top;
-  card.style.setProperty('--water-px',x+'px');card.style.setProperty('--water-py',y+'px');
-  card.style.setProperty('--water-x',(((y/Math.max(rect.height,1))-.5)*-5)+'deg');
-  card.style.setProperty('--water-y',(((x/Math.max(rect.width,1))-.5)*5)+'deg');
-  card.classList.remove('water-impact');void card.offsetWidth;card.classList.add('water-impact');
- },{passive:true});
- document.addEventListener('pointermove',event=>{
-  const card=event.target.closest(financeWaterCards);if(!card)return;
-  const rect=card.getBoundingClientRect(),x=event.clientX-rect.left,y=event.clientY-rect.top;
-  card.style.setProperty('--water-px',x+'px');card.style.setProperty('--water-py',y+'px');
-  card.style.setProperty('--water-x',(((y/Math.max(rect.height,1))-.5)*-5)+'deg');
-  card.style.setProperty('--water-y',(((x/Math.max(rect.width,1))-.5)*5)+'deg');
- },{passive:true});
- document.addEventListener('pointerout',event=>{
-  const card=event.target.closest(financeWaterCards);if(!card||card.contains(event.relatedTarget))return;
-  card.classList.remove('water-impact');card.style.setProperty('--water-x','0deg');card.style.setProperty('--water-y','0deg');
- },{passive:true});
-}
-
-/* Previous pointer movement retained for compatibility. */
-const waterMotionQuery=window.matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
-if(waterMotionQuery.matches){
-  let waterFrame=0,waterTarget=null,waterPoint=null;
-  document.addEventListener('pointermove',event=>{
-    const card=event.target.closest('.stat-card,.tx-stat,.goal-item,.bill-item,.panel');
-    if(!card||!waterMotionQuery.matches)return;
-    waterTarget=card;waterPoint=event;
-    if(waterFrame)return;
-    waterFrame=requestAnimationFrame(()=>{
-      waterFrame=0;
-      if(!waterTarget||!waterPoint)return;
-      const rect=waterTarget.getBoundingClientRect();
-      const x=(waterPoint.clientX-rect.left)/Math.max(rect.width,1);
-      const y=(waterPoint.clientY-rect.top)/Math.max(rect.height,1);
-      waterTarget.style.setProperty('--water-y',((x-.5)*7).toFixed(2)+'deg');
-      waterTarget.style.setProperty('--water-x',((.5-y)*6).toFixed(2)+'deg');
-      waterTarget.style.setProperty('--water-glow',(x*100).toFixed(1)+'%');
-    });
-  },{passive:true});
-  document.addEventListener('pointerout',event=>{
-    const card=event.target.closest('.stat-card,.tx-stat,.goal-item,.bill-item,.panel');
-    if(!card||card.contains(event.relatedTarget))return;
-    card.style.setProperty('--water-x','0deg');
-    card.style.setProperty('--water-y','0deg');
-    card.style.setProperty('--water-glow','50%');
-    if(waterTarget===card){waterTarget=null;waterPoint=null}
-  },{passive:true});
-}
-
+document.addEventListener('keydown',event=>{if(event.key==='Escape')closeFinanceSidebar();});
 const money=n=>new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',maximumFractionDigits:0}).format(Number(n)||0);
 const today=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;};
 const month=()=>today().slice(0,7);
@@ -98,7 +45,7 @@ const cats=[...new Set(['Food','Transport','Bills','Shopping','Health','Educatio
 const nav=[['dashboard','⌂','Overview','index.html'],['transactions','⇄','Transactions','transactions.html'],['accounts','▣','Accounts','accounts.html'],['budgets','◷','Budgets','budgets.html'],['goals','◎','Savings goals','goals.html'],['bills','▣','Bills & payments','bills.html'],['recurring','⟳','Recurring','recurring.html'],['subscriptions','◉','Subscriptions','subscriptions.html'],['debts','↘','Debts','debts.html'],['investments','↗','Investments','investments.html'],['assets','◇','Assets & liabilities','assets.html'],['net-worth','◈','Net worth','net-worth.html'],['invoices','▧','Invoices','invoices.html'],['watchlists','⌕','Watchlists','watchlists.html'],['rules','⚙','Automation rules','rules.html'],['categories','☷','Categories','categories.html'],['refunds','↩','Refunds','refunds.html'],['reconciliation','≋','Reconciliation','reconciliation.html'],['household','♧','Household','household.html'],['calendar','▦','Calendar','calendar.html'],['forecasts','⌁','Forecasts','forecasts.html'],['insights','✧','Insights','insights.html'],['calculators','∑','Calculators','calculators.html'],['tax-estimator','％','Tax estimator','tax-estimator.html'],['assistant','✦','Finance assistant','assistant.html'],['data','⇧','Import / export','data.html'],['notifications','♢','Notifications','notifications.html'],['reports','▥','Reports','reports.html'],['profile','◉','Profile','profile.html'],['security','⌑','Privacy & security','security.html'],['help','?','Help center','help.html'],['settings','⚙','Settings','settings.html']];
 const page=new URLSearchParams(location.search).get('module')||document.body.dataset.page||'dashboard';
 const titles={dashboard:'Your money, at a glance',transactions:'Transactions',budgets:'Budget planner',goals:'Savings goals',bills:'Bills & payments',reports:'Money reports',settings:'Settings',accounts:'Accounts',recurring:'Recurring items',subscriptions:'Subscriptions',debts:'Debt manager',investments:'Investments',assets:'Assets & liabilities',invoices:'Invoices & freelance',watchlists:'Spending watchlists',rules:'Automation rules',categories:'Categories & tags',refunds:'Refunds & reimbursements',reconciliation:'Reconciliation',household:'Household finance',notifications:'Notifications',forecasts:'Cash-flow forecasts',calendar:'Financial calendar','net-worth':'Net worth',insights:'Financial insights',calculators:'Finance calculators','tax-estimator':'Tax estimator',assistant:'Finance assistant',data:'Import & export',profile:'Profile',security:'Privacy & security',help:'Help center'};
-function shell(){ document.documentElement.dataset.theme=db.settings?.theme||'light'; $('#app').innerHTML=`<div class="app-shell"><aside class="sidebar" id="sidebar"><div class="brand"><span class="brand-mark">₹</span><span>Finance<span style="color:var(--green)">.</span></span></div><div><div class="nav-label">Workspace</div><nav class="nav-list">${nav.map(([id,ico,label,url])=>`<a class="nav-link ${page===id?'active':''}" href="${url}"><span class="nav-icon">${ico}</span>${label}</a>`).join('')}</nav></div><div class="sidebar-note"><strong>Private by design</strong><br>Data stays in this browser on this device. Export a backup regularly.</div></aside><main class="main"><header class="topbar"><div style="display:flex;align-items:center;gap:12px"><button class="btn mobile-menu" id="menuBtn" aria-label="Open navigation">☰</button><div><div class="eyebrow">PERSONAL FINANCE</div><h1 class="page-title">${titles[page]||'Finance'}</h1></div></div><div class="top-actions"><button class="btn" id="themeToggle" aria-label="Toggle color theme" title="Toggle light/dark theme">${db.settings?.theme==='dark'?'☀':'☾'}</button><button class="btn" id="languageToggle" aria-label="Switch language" title="Switch English/Hindi">${db.settings?.language==='hi'?'EN':'हिंदी'}</button><button class="btn hide" id="installApp" aria-label="Install Finance app">＋ Install</button><button class="btn" id="quickAdd">＋ <span class="btn-label">Add transaction</span></button><a class="avatar" href="settings.html" title="Settings">PK</a></div></header><div class="content" id="content"></div></main></div><div id="toast" class="toast hide" role="status" aria-live="polite"></div>`;$('#menuBtn').onclick=()=>{const sidebar=$('#sidebar');const opening=!sidebar.classList.contains('open');sidebar.classList.toggle('open',opening);document.body.classList.toggle('sidebar-menu-open',opening);$('#sidebarBackdrop')?.toggleAttribute('hidden',!opening);$('#menuBtn').setAttribute('aria-expanded',String(opening));};$('#quickAdd').onclick=()=>openTxForm();$('#themeToggle').onclick=()=>{db.settings.theme=db.settings.theme==='dark'?'light':'dark';save();render()};$('#languageToggle').onclick=()=>{db.settings.language=db.settings.language==='hi'?'en':'hi';save();render()};$('#installApp').onclick=async()=>{if(!window.financeInstallPrompt)return;await window.financeInstallPrompt.prompt();const choice=await window.financeInstallPrompt.userChoice;window.financeInstallPrompt=null;$('#installApp').classList.add('hide');if(choice.outcome==='accepted')toast('Installation accepted')};}
+function shell(){ document.documentElement.dataset.theme=db.settings?.theme||'light'; $('#app').innerHTML=`<div class="app-shell"><aside class="sidebar" id="sidebar"><div class="brand"><span class="brand-mark">₹</span><span>Finance<span style="color:var(--green)">.</span></span></div><div><div class="nav-label">Workspace</div><nav class="nav-list">${nav.map(([id,ico,label,url])=>`<a class="nav-link ${page===id?'active':''}" href="${url}"><span class="nav-icon">${ico}</span>${label}</a>`).join('')}</nav></div><div class="sidebar-note"><strong>Private by design</strong><br>Data stays in this browser on this device. Export a backup regularly.</div></aside><main class="main"><header class="topbar"><div style="display:flex;align-items:center;gap:12px"><button class="btn mobile-menu" id="menuBtn" aria-label="Open navigation">☰</button><div><div class="eyebrow">PERSONAL FINANCE</div><h1 class="page-title">${titles[page]||'Finance'}</h1></div></div><div class="top-actions"><button class="btn" id="themeToggle" aria-label="Toggle color theme" title="Toggle light/dark theme">${db.settings?.theme==='dark'?'☀':'☾'}</button><button class="btn" id="languageToggle" aria-label="Switch language" title="Switch English/Hindi">${db.settings?.language==='hi'?'EN':'हिंदी'}</button><button class="btn hide" id="installApp" aria-label="Install Finance app">＋ Install</button><button class="btn" id="quickAdd">＋ <span class="btn-label">Add transaction</span></button><a class="avatar" href="settings.html" title="Settings">PK</a></div></header><div class="content" id="content"></div></main></div><div id="toast" class="toast hide" role="status" aria-live="polite"></div>`;$('#menuBtn').onclick=()=>{const sidebar=$('#sidebar');const opening=!sidebar.classList.contains('open');if(opening){let backdrop=$('#sidebarBackdrop');if(!backdrop){backdrop=document.createElement('button');backdrop.type='button';backdrop.id='sidebarBackdrop';backdrop.className='sidebar-backdrop';backdrop.setAttribute('aria-label','Close navigation');document.body.appendChild(backdrop);}sidebar.classList.add('open');backdrop.hidden=false;document.body.classList.add('sidebar-menu-open');$('#menuBtn').setAttribute('aria-expanded','true');}else{closeFinanceSidebar();}};$('#quickAdd').onclick=()=>openTxForm();$('#themeToggle').onclick=()=>{db.settings.theme=db.settings.theme==='dark'?'light':'dark';save();render()};$('#languageToggle').onclick=()=>{db.settings.language=db.settings.language==='hi'?'en':'hi';save();render()};$('#installApp').onclick=async()=>{if(!window.financeInstallPrompt)return;await window.financeInstallPrompt.prompt();const choice=await window.financeInstallPrompt.userChoice;window.financeInstallPrompt=null;$('#installApp').classList.add('hide');if(choice.outcome==='accepted')toast('Installation accepted')};}
 function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.remove('hide');clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.classList.add('hide'),2600)}
 function panel(title,body,sub='',action=''){return `<section class="panel"><div class="panel-head"><div><h3>${title}</h3>${sub?'<div class="panel-sub">'+sub+'</div>':''}</div>${action}</div>${body}</section>`}
 function txRows(rows){if(!rows.length)return '<tr><td colspan="5"><div class="empty">अभी कोई लेन-देन नहीं है। “Add transaction” से शुरू करें।</div></td></tr>';return rows.map(t=>`<tr><td><div class="tx-title">${escapeHTML(t.title)}</div><div class="tx-sub">${escapeHTML(t.category)} · ${escapeHTML(t.method||'Other')}</div></td><td>${escapeHTML(t.date||'—')}</td><td><span class="pill ${t.type==='income'?'green':t.type==='transfer'?'amber':'red'}">${t.type==='income'?'Income':t.type==='transfer'?'Transfer':'Expense'}</span></td><td class="amount ${t.type==='income'?'positive':t.type==='expense'?'negative':''}">${t.type==='income'?'+':t.type==='expense'?'−':''}${money(t.amount)}</td><td><button class="btn" data-edit="${t.id}" aria-label="Edit ${escapeHTML(t.title)}">Edit</button> <button class="btn btn-danger" data-delete="${t.id}" aria-label="Delete ${escapeHTML(t.title)}">×</button></td></tr>`).join('')}
