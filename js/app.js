@@ -2,9 +2,34 @@
 'use strict';
 // Bust stale GitHub Pages caches so the latest premium motion stylesheet is loaded.
 const motionStylesheet=document.querySelector('link[rel="stylesheet"][href*="css/styles.css"]');
-if(motionStylesheet)motionStylesheet.href='css/styles.css?v=20261025-underwater1';
+if(motionStylesheet)motionStylesheet.href='css/styles.css?v=20261025-waterimpact1';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
-/* Subtle pointer-driven water movement. Delegation supports cards rendered after navigation. */
+
+/* Pointer-triggered water impact ripple controller */
+const financeWaterCards='.main .stat-card,.main .tx-stat,.main .goal-item,.main .bill-item,.main .panel,.main .card,.main .metric-card,.main .chart-card,.main .summary-card';
+if(window.matchMedia('(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference)').matches){
+ document.addEventListener('pointerover',event=>{
+  const card=event.target.closest(financeWaterCards);if(!card||card.contains(event.relatedTarget))return;
+  const rect=card.getBoundingClientRect(),x=event.clientX-rect.left,y=event.clientY-rect.top;
+  card.style.setProperty('--water-px',x+'px');card.style.setProperty('--water-py',y+'px');
+  card.style.setProperty('--water-x',(((y/Math.max(rect.height,1))-.5)*-5)+'deg');
+  card.style.setProperty('--water-y',(((x/Math.max(rect.width,1))-.5)*5)+'deg');
+  card.classList.remove('water-impact');void card.offsetWidth;card.classList.add('water-impact');
+ },{passive:true});
+ document.addEventListener('pointermove',event=>{
+  const card=event.target.closest(financeWaterCards);if(!card)return;
+  const rect=card.getBoundingClientRect(),x=event.clientX-rect.left,y=event.clientY-rect.top;
+  card.style.setProperty('--water-px',x+'px');card.style.setProperty('--water-py',y+'px');
+  card.style.setProperty('--water-x',(((y/Math.max(rect.height,1))-.5)*-5)+'deg');
+  card.style.setProperty('--water-y',(((x/Math.max(rect.width,1))-.5)*5)+'deg');
+ },{passive:true});
+ document.addEventListener('pointerout',event=>{
+  const card=event.target.closest(financeWaterCards);if(!card||card.contains(event.relatedTarget))return;
+  card.classList.remove('water-impact');card.style.setProperty('--water-x','0deg');card.style.setProperty('--water-y','0deg');
+ },{passive:true});
+}
+
+/* Previous pointer movement retained for compatibility. */
 const waterMotionQuery=window.matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
 if(waterMotionQuery.matches){
   let waterFrame=0,waterTarget=null,waterPoint=null;
