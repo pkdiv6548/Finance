@@ -315,3 +315,17 @@ table tbody tr:nth-child(5){animation-delay:.14s}
 .main .stat-card.water-impact,.main .tx-stat.water-impact,.main .goal-item.water-impact,.main .bill-item.water-impact,.main .panel.water-impact,.main .card.water-impact,.main .metric-card.water-impact,.main .chart-card.water-impact,.main .summary-card.water-impact{animation:financeWaterBob .72s cubic-bezier(.2,.75,.25,1) both}
 .main .stat-card.water-impact::after,.main .tx-stat.water-impact::after,.main .goal-item.water-impact::after,.main .bill-item.water-impact::after,.main .panel.water-impact::after,.main .card.water-impact::after,.main .metric-card.water-impact::after,.main .chart-card.water-impact::after,.main .summary-card.water-impact::after{animation:financeWaterImpact .95s ease-out both}
 @media(hover:none),(prefers-reduced-motion:reduce){.main .stat-card,.main .tx-stat,.main .goal-item,.main .bill-item,.main .panel,.main .card,.main .metric-card,.main .chart-card,.main .summary-card{transform:none!important;animation:none!important}.main .stat-card::after,.main .tx-stat::after,.main .goal-item::after,.main .bill-item::after,.main .panel::after,.main .card::after,.main .metric-card::after,.main .chart-card::after,.main .summary-card::after{display:none!important}}
+
+/* Sidebar: keep Finance brand fixed while workspace navigation scrolls independently */
+.sidebar{overflow:hidden!important;display:flex;flex-direction:column;min-height:0;height:100vh;height:100dvh}
+.sidebar .brand{position:sticky!important;top:0;z-index:4;flex:0 0 auto;background:#fff;padding:0 10px 18px!important;margin:0!important}
+.sidebar .nav-label{flex:0 0 auto}
+.sidebar nav,.sidebar .nav-list,.sidebar .sidebar-nav,.sidebar .sidebar-content{min-height:0}
+.sidebar nav{overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;flex:1 1 auto}
+.sidebar .nav-list{padding-bottom:18px}
+@media(max-width:720px){
+ .sidebar{height:100vh;height:100dvh;overflow:hidden!important;padding-top:22px;padding-bottom:16px}
+ .sidebar .brand{top:0;padding-bottom:18px!important}
+ .sidebar nav{overflow-y:auto;min-height:0;flex:1 1 auto;-webkit-overflow-scrolling:touch}
+}
+:root[data-theme="dark"] .sidebar .brand{background:var(--bg)}
