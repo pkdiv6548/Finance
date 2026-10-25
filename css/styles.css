@@ -363,3 +363,30 @@ table tbody tr:nth-child(5){animation-delay:.14s}
     scrollbar-width:thin!important;
   }
 }
+
+/* Settings page: constrain backup/restore/reset action buttons on narrow screens */
+.settings-row{min-width:0;align-items:center;gap:14px}
+.settings-row>div{flex:1 1 auto;min-width:0}
+.settings-row>.btn,.settings-row>label.btn{
+  flex:0 0 124px!important;width:124px!important;min-width:124px!important;
+  max-width:124px!important;min-height:48px;padding:10px 12px!important;
+  display:inline-flex;align-items:center;justify-content:center;
+  text-align:center;line-height:1.35;white-space:normal;overflow-wrap:anywhere;
+}
+.settings-row .tx-sub{overflow-wrap:anywhere}
+@media(max-width:720px){
+  .settings-row{gap:12px;padding:16px 0}
+  .settings-row>div strong{font-size:15px;line-height:1.35}
+  .settings-row>.btn,.settings-row>label.btn{
+    flex-basis:112px!important;width:112px!important;min-width:112px!important;
+    max-width:112px!important;min-height:48px;padding:9px 8px!important;
+    font-size:14px;letter-spacing:0;box-shadow:0 2px 5px #17251f05;
+  }
+}
+@media(max-width:360px){
+  .settings-row{align-items:flex-start;flex-direction:column}
+  .settings-row>.btn,.settings-row>label.btn{
+    align-self:flex-start;flex-basis:auto!important;width:auto!important;
+    min-width:112px!important;max-width:100%!important;
+  }
+}
