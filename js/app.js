@@ -252,22 +252,27 @@ $('#content').innerHTML='<section class="panel currency-panel"><div class="panel
    const key='finance-wb-v1-'+item.id;
    try{
     const cached=JSON.parse(localStorage.getItem(key)||'null');
-    if(cached&&Number.isFinite(cached.value)&&cached.year&&Date.now()-cached.savedAt<604800000)return {...item,...cached,fromCache:true};
+    if(cached&&Number.isFinite(cached.value)&&/^\\d{4}$/.test(String(cached.year))&&Number.isFinite(cached.savedAt)&&Date.now()-cached.savedAt<604800000)return {...item,...cached,fromCache:true};
    }catch(_){}
-   const response=await fetch('https://api.worldbank.org/v2/country/IND/indicator/'+encodeURIComponent(item.id)+'?format=json&per_page=10');
-   if(!response.ok)throw Error('World Bank data unavailable');
-   const payload=await response.json();
-   if(!Array.isArray(payload)||!Array.isArray(payload[1]))throw Error('Invalid World Bank response');
-   const record=payload[1].find(row=>row.value!==null&&Number.isFinite(Number(row.value))&&/^\d{4}$/.test(String(row.date)));
-   if(!record)throw Error('No indicator data');
-   const data={value:Number(record.value),year:String(record.date),savedAt:Date.now()};
-   try{localStorage.setItem(key,JSON.stringify(data))}catch(_){}
-   return {...item,...data};
+   try{
+    const response=await fetch('https://api.worldbank.org/v2/country/IND/indicator/'+encodeURIComponent(item.id)+'?format=json&per_page=10');
+    if(!response.ok)throw Error('World Bank data unavailable');
+    const payload=await response.json();
+    if(!Array.isArray(payload)||!Array.isArray(payload[1]))throw Error('Invalid World Bank response');
+    const record=payload[1].find(row=>row.value!==null&&Number.isFinite(Number(row.value))&&/^\\d{4}$/.test(String(row.date)));
+    if(!record)throw Error('No indicator data');
+    const data={value:Number(record.value),year:String(record.date),savedAt:Date.now()};
+    try{localStorage.setItem(key,JSON.stringify(data))}catch(_){}
+    return {...item,...data};
+   }catch(_){
+    return {...item,error:true};
+   }
   }));
   const available=results.filter(x=>Number.isFinite(x.value));
   if(!available.length){target.innerHTML='<div class="notice">Economic data is temporarily unavailable. Please try again later.</div>';return}
-  target.innerHTML=available.map(item=>'<article class="stat-card"><span class="stat-label">'+escapeHTML(item.label)+'</span><strong class="stat-value">'+item.value.toLocaleString('en-IN',{maximumFractionDigits:2})+'%</strong><span class="stat-note">India · '+escapeHTML(item.year)+(item.fromCache?' · Cached':'')+'</span></article>').join('');
-  if(available.length<indicators.length)target.insertAdjacentHTML('beforeend','<div class="notice">Some indicators are temporarily unavailable.</div>');
+  target.innerHTML=available.map(item=>'<article class="stat-card"><span class="stat-label">'+escapeHTML(item.label)+'</span><strong class="stat-value">'+item.value.toLocaleString('en-IN',{maximumFractionDigits:2})+'%</strong><span class="stat-note">India · '+escapeHTML(item.year)+(item.fromCache?' · Cached':' · Annual data')+'</span></article>').join('');
+  const failed=results.filter(x=>x.error);
+  if(failed.length)target.insertAdjacentHTML('beforeend','<div class="notice">Unavailable right now: '+failed.map(x=>escapeHTML(x.label)).join(', ')+'. Other indicators are shown where available.</div>');
  }
  loadEconomicSnapshot().catch(()=>{const target=$('#economicSnapshot');if(target)target.innerHTML='<div class="notice">Economic data is temporarily unavailable. Please try again later.</div>'});
  $('#emiForm').onsubmit=e=>{e.preventDefault();const p=Number($('#emiP').value),rate=Number($('#emiR').value),years=Number($('#emiY').value),r=rate/1200,n=years*12;if(!Number.isFinite(p)||!Number.isFinite(rate)||!Number.isFinite(years)||p<=0||rate<0||years<=0||years>50){$('#emiOut').textContent='Enter a positive loan amount, a non-negative rate and tenure up to 50 years.';return}const v=r?p*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1):p/n;if(!Number.isFinite(v))return;$('#emiOut').textContent='Estimated EMI: '+money(v)+' · Total: '+money(v*n)+' · Interest: '+money(v*n-p)};
