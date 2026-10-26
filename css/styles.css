@@ -473,3 +473,42 @@ body[data-page="settings"] .settings-list .settings-row>button.btn-danger{
   }
   .sidebar-backdrop[hidden]{display:none!important}
 }
+
+
+/* MOBILE DRAWER FIX v20261026: keep the drawer off-canvas until explicitly opened,
+   then slide it in; tapping the scrim or a navigation item closes it. */
+@media(max-width:720px){
+  .sidebar{
+    display:flex!important;
+    position:fixed!important;
+    inset:0 auto 0 0!important;
+    width:min(86vw,320px)!important;
+    height:100vh!important;
+    height:100dvh!important;
+    max-height:100dvh!important;
+    z-index:1000!important;
+    overflow:hidden!important;
+    transform:translate3d(-105%,0,0)!important;
+    visibility:hidden!important;
+    pointer-events:none!important;
+    transition:transform .28s cubic-bezier(.2,.75,.25,1),visibility .28s!important;
+    will-change:transform;
+  }
+  .sidebar.open{
+    transform:translate3d(0,0,0)!important;
+    visibility:visible!important;
+    pointer-events:auto!important;
+  }
+  .sidebar-backdrop{
+    opacity:0!important;
+    visibility:hidden!important;
+    transition:opacity .22s ease,visibility .22s ease!important;
+  }
+  .sidebar-backdrop:not([hidden]){
+    opacity:1!important;
+    visibility:visible!important;
+  }
+}
+@media(max-width:720px) and (prefers-reduced-motion:reduce){
+  .sidebar,.sidebar-backdrop{transition:none!important}
+}
