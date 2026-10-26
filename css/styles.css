@@ -1137,3 +1137,14 @@ button.profile-avatar{
  .main>.content>.split{grid-template-columns:minmax(0,1fr)}
  .toolbar a.btn{width:100%}
 }
+
+
+/* SIP calculator card: use available width for the final input row */
+#sipForm #sipY{grid-column:1/-1;max-width:100%}
+#sipForm .field.full{grid-column:1/-1}
+#sipForm .field{min-width:0}
+#sipForm input{width:100%;min-width:0}
+@media(max-width:420px){
+  #sipForm{grid-template-columns:minmax(0,1fr)}
+  #sipForm .field,#sipForm #sipY,#sipForm .field.full{grid-column:1/-1}
+}
