@@ -37,6 +37,48 @@ const extraKeys=['accounts','recurring','subscriptions','debts','investments','a
 function normalizeDB(value){const base=defaults(),source=value&&typeof value==='object'&&!Array.isArray(value)?value:{};const next={...base,...source};for(const key of ['transactions','budgets','goals','bills',...extraKeys])if(!Array.isArray(next[key]))next[key]=[];next.settings={...base.settings,...(source.settings&&typeof source.settings==='object'?source.settings:{}),theme:source.settings?.theme==='dark'?'dark':'light',language:source.settings?.language==='hi'?'hi':'en'};next.transactions=next.transactions.filter(t=>t&&typeof t==='object'&&Number.isFinite(Number(t.amount))&&Number(t.amount)>=0&&t.date);next.budgets=next.budgets.filter(x=>x&&typeof x==='object');next.goals=next.goals.filter(x=>x&&typeof x==='object');next.bills=next.bills.filter(x=>x&&typeof x==='object');return next}
 let db; try{db=normalizeDB(JSON.parse(localStorage.getItem('finance-data-v1'))||defaults())}catch{db=normalizeDB(defaults())}
 const save=()=>{try{localStorage.setItem('finance-data-v1',JSON.stringify(db));return true}catch{toast('Browser storage is full or unavailable. Export a backup and remove some data.');return false}};
+
+/* Seed one clearly illustrative record into previously empty demo modules, once per browser. */
+const seedEmptyDemoRecords=()=>{
+ if(db.settings?.demoRecordsSeeded)return;
+ const d=today();
+ const examples={
+ accounts:{name:'Everyday savings',type:'Savings',balance:18500,institution:'Demo Bank'},
+ recurring:{name:'Monthly internet plan',amount:799,type:'expense',frequency:'Monthly',nextDate:d,active:true},
+ subscriptions:{name:'Music streaming',amount:149,frequency:'Monthly',nextDate:d,active:true},
+ debts:{name:'Sample personal loan',principal:25000,rate:10.5,payment:2500,due:d},
+ investments:{name:'Index mutual fund',type:'Mutual fund',quantity:12,cost:12000,value:13200,asOf:d},
+ assets:{name:'Emergency savings',type:'Asset',value:18500,asOf:d,notes:'Illustrative demo record'},
+ invoices:{number:'DEMO-1001',client:'Sample client',amount:8500,issued:d,due:d,status:'Sent'},
+ watchlists:{name:'Monthly groceries',category:'Food',threshold:7000,period:'Monthly'},
+ rules:{name:'Categorize grocery purchases',match:'grocery',category:'Food',enabled:true},
+ categories:{name:'Health',type:'Expense',parent:'Living',notes:'Demo category'},
+ refunds:{name:'Returned online order',amount:599,type:'Refund expected',date:d,status:'Pending'},
+ reconciliation:{account:'Everyday savings',statementBalance:18500,appBalance:18500,date:d,status:'Matched'},
+ household:{name:'Shared household budget',kind:'Shared budget',amount:12000,notes:'Illustrative monthly amount'},
+ notifications:{title:'Review monthly budget',message:'Check spending against your monthly plan.',type:'Reminder',date:d,read:false},
+ forecasts:{name:'Conservative month',extraIncome:2000,cutSpend:1500,notes:'Illustrative scenario only'},
+ calendar:{title:'Monthly internet bill',date:d,type:'Bill',amount:799,notes:'Demo calendar event'},
+ 'net-worth':{date:d,assets:125000,liabilities:25000,notes:'Illustrative snapshot'},
+ insights:{title:'Review recurring costs',action:'Check whether all subscriptions are still needed.',status:'Open',date:d},
+ calculators:{name:'Monthly savings estimate',principal:5000,rate:6,years:1,result:61600},
+ 'tax-estimator':{financialYear:'2026–27',regime:'New',income:600000,deductions:0,notes:'Demo figures only; not tax advice'},
+ assistant:{question:'How can I reduce monthly expenses?',answer:'Review recurring charges and set category budgets.',date:d},
+ data:{name:'Initial demo backup reminder',format:'JSON',date:d,notes:'Export a backup after entering your own data.'},
+ profile:{displayName:'Finance Demo User',emailHint:'',notes:'Local demo profile; no account is connected.'},
+ security:{title:'Review browser backup',status:'Reviewed',notes:'Demo reminder: exported backups may contain personal financial data.'},
+ help:{topic:'Getting started',question:'How do I keep my data?',resolution:'Use Settings → Download backup to export a local JSON copy.',status:'Resolved'}
+ };
+ let changed=false;
+ for(const [key,record] of Object.entries(examples)){
+  if(Array.isArray(db[key])&&db[key].length===0){db[key].push({id:uid(),created:Date.now(),demo:true,...record});changed=true;}
+ }
+ db.settings={...db.settings,demoRecordsSeeded:true};
+ if(changed)save();
+ else {try{localStorage.setItem('finance-data-v1',JSON.stringify(db))}catch{}}
+};
+
+seedEmptyDemoRecords();
 const sum=(arr,fn)=>arr.reduce((n,x)=>n+fn(x),0);
 const txMonth=()=>db.transactions.filter(t=>t.date?.startsWith(month()));
 const income=arr=>sum(arr.filter(t=>t.type==='income'),t=>+t.amount);
