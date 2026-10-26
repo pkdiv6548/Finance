@@ -512,3 +512,40 @@ body[data-page="settings"] .settings-list .settings-row>button.btn-danger{
 @media(max-width:720px) and (prefers-reduced-motion:reduce){
   .sidebar,.sidebar-backdrop{transition:none!important}
 }
+
+
+/* PROGRESS BAR SHIMMER FIX v20261026: animate the highlight across the entire bar */
+.bar-fill{position:relative!important;isolation:isolate;overflow:hidden}
+.bar-fill::after{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  border-radius:inherit;
+  pointer-events:none;
+  background:linear-gradient(110deg,transparent 0%,#ffffff00 32%,#ffffff88 50%,#ffffff00 68%,transparent 100%)!important;
+  background-size:200% 100%!important;
+  background-position:200% 0;
+  animation:financeFullBarShimmer 2.8s linear infinite!important;
+}
+.progress span{position:relative;isolation:isolate;overflow:hidden}
+.progress span::after{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  border-radius:inherit;
+  pointer-events:none;
+  background:linear-gradient(110deg,transparent 0%,#ffffff00 32%,#ffffff88 50%,#ffffff00 68%,transparent 100%)!important;
+  background-size:200% 100%!important;
+  animation:financeFullBarShimmer 2.8s linear infinite!important;
+}
+@keyframes financeFullBarShimmer{
+  from{background-position:200% 0}
+  to{background-position:-200% 0}
+}
+@media(prefers-reduced-motion:reduce){
+  .bar-fill::after,.progress span::after{animation:none!important;background-position:50% 0!important}
+}
