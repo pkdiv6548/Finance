@@ -549,3 +549,19 @@ body[data-page="settings"] .settings-list .settings-row>button.btn-danger{
 @media(prefers-reduced-motion:reduce){
   .bar-fill::after,.progress span::after{animation:none!important;background-position:50% 0!important}
 }
+
+
+/* Progress shimmer fix: animate the highlight across the FULL track,
+   rather than moving a 42%-wide pseudo-element that only lights half the bar. */
+.bar-fill::after,
+.progress span::after,
+.progress>span::after,
+.progress-bar>span::after,
+.budget-progress>span::after,
+.goal-progress>span::after{
+  width:100%!important;
+  max-width:none!important;
+  background-size:200% 100%!important;
+  background-repeat:no-repeat!important;
+  pointer-events:none;
+}
