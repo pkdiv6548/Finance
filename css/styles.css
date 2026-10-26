@@ -565,3 +565,34 @@ body[data-page="settings"] .settings-list .settings-row>button.btn-danger{
   background-repeat:no-repeat!important;
   pointer-events:none;
 }
+
+
+/* PROGRESS WIDTH FIX: preserve each element's inline percentage width.
+   Animate its scale, not width; the filled color must stop at the real value. */
+@keyframes finProgress{
+  from{transform:scaleX(0)}
+  to{transform:scaleX(1)}
+}
+.progress>span,
+.progress span,
+.progress-bar>span,
+.budget-progress>span,
+.goal-progress>span{
+  transform-origin:left center;
+  animation:finProgress 1s cubic-bezier(.2,.7,.2,1) both!important;
+}
+.progress span::after,
+.progress>span::after{
+  position:absolute;
+  inset:0;
+  width:100%!important;
+  height:100%;
+  background:linear-gradient(110deg,transparent 0%,#ffffff00 30%,#ffffff80 50%,#ffffff00 70%,transparent 100%)!important;
+  background-size:220% 100%!important;
+  animation:ultraShine 2.8s linear infinite;
+  pointer-events:none;
+}
+@media(prefers-reduced-motion:reduce){
+  .progress>span,.progress span,.progress-bar>span,.budget-progress>span,.goal-progress>span,
+  .progress span::after,.progress>span::after{animation:none!important;transform:none!important}
+}
