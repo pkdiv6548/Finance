@@ -1188,3 +1188,9 @@ body[data-page="profile"] .content>.panel .toolbar .btn{
 #ciForm .field.full{
   margin-top:2px;
 }
+
+
+/* Dashboard savings-goal cards: ensure visible separation between siblings */
+.goal-item + .goal-item{
+  margin-top:12px;
+}
