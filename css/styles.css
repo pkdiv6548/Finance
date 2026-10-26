@@ -783,3 +783,70 @@ body[data-page="settings"] .settings-list .settings-row>button.btn-danger{
     align-items: center !important;
   }
 }
+
+
+/* Automatic page-load motion: runs on opening/reloading, with no hover or touch needed. */
+@keyframes financePageEnter {
+  0% { opacity: 0; transform: translate3d(0, 18px, 0); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes financeHeaderEnter {
+  0% { opacity: 0; transform: translate3d(0, -10px, 0); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes financeControlEnter {
+  0% { opacity: 0; transform: translate3d(0, 8px, 0) scale(.98); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+.topbar {
+  animation: financeHeaderEnter .48s cubic-bezier(.2,.75,.25,1) both;
+}
+.topbar .mobile-menu,
+.topbar #themeToggle,
+.topbar #languageToggle,
+.topbar #installApp,
+.topbar #quickAdd,
+.topbar .avatar {
+  animation: financeControlEnter .42s cubic-bezier(.2,.75,.25,1) both;
+}
+.topbar #themeToggle { animation-delay: .04s; }
+.topbar #languageToggle { animation-delay: .07s; }
+.topbar #installApp { animation-delay: .10s; }
+.topbar #quickAdd { animation-delay: .13s; }
+.topbar .avatar { animation-delay: .16s; }
+.content > .panel,
+.content > section.panel,
+.content > .card,
+.content > section,
+.content > article {
+  animation: financePageEnter .58s cubic-bezier(.2,.75,.25,1) both;
+}
+.content > :nth-child(1) { animation-delay: .04s; }
+.content > :nth-child(2) { animation-delay: .11s; }
+.content > :nth-child(3) { animation-delay: .18s; }
+.content > :nth-child(4) { animation-delay: .25s; }
+.content > :nth-child(5) { animation-delay: .32s; }
+.content .stat-card,
+.content .metric-card {
+  animation: financePageEnter .52s cubic-bezier(.2,.75,.25,1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .topbar,
+  .topbar .mobile-menu,
+  .topbar #themeToggle,
+  .topbar #languageToggle,
+  .topbar #installApp,
+  .topbar #quickAdd,
+  .topbar .avatar,
+  .content > .panel,
+  .content > section.panel,
+  .content > .card,
+  .content > section,
+  .content > article,
+  .content .stat-card,
+  .content .metric-card {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
