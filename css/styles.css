@@ -1098,3 +1098,15 @@ button.profile-avatar{
  .bill-actions{align-items:center;flex-direction:row}
  .bill-controls{width:auto}
 }
+
+/* Open exchange-rate API converter */
+.currency-panel{overflow:hidden}
+.currency-submit{display:flex;gap:10px;align-items:center}
+.currency-submit .btn-primary{flex:1}
+.currency-result{display:grid;gap:5px;margin-top:18px;padding:18px;border:1px solid #d7e9dd;border-radius:15px;background:linear-gradient(135deg,#f1faf4,#fff);min-width:0}
+.currency-result>span{font-size:12px;color:var(--muted);font-weight:700}
+.currency-result>strong{font-size:clamp(22px,3vw,30px);font-weight:850;letter-spacing:-.7px;overflow-wrap:anywhere;color:var(--green)}
+.currency-result>small,.currency-disclaimer{font-size:12px;color:var(--muted);overflow-wrap:anywhere}
+.currency-disclaimer{margin:12px 0 0}
+:root[data-theme="dark"] .currency-result{background:#192c20;border-color:#315541}
+@media(max-width:520px){.currency-submit{flex-wrap:wrap}.currency-result{padding:15px}}
