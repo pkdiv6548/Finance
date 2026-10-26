@@ -1175,3 +1175,16 @@ body[data-page="profile"] .content>.panel .toolbar .btn{
   body[data-page="profile"] .content>.panel h3{margin-bottom:14px}
   body[data-page="profile"] .content>.panel .notice{margin-bottom:14px}
 }
+
+
+/* Calculator action/result spacing: prevent buttons touching notices */
+#emiForm + #emiOut,
+#sipForm + #sipOut,
+#ciForm + #ciOut{
+  margin-top:12px;
+}
+#emiForm .field.full,
+#sipForm .field.full,
+#ciForm .field.full{
+  margin-top:2px;
+}
