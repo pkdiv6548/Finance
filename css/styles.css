@@ -1148,3 +1148,30 @@ button.profile-avatar{
   #sipForm{grid-template-columns:minmax(0,1fr)}
   #sipForm .field,#sipForm #sipY,#sipForm .field.full{grid-column:1/-1}
 }
+
+
+/* Profile page: balance card spacing and soften the shadow */
+body[data-page="profile"] .content>.panel{
+  padding:24px;
+  box-shadow:0 5px 18px #1e392608;
+}
+body[data-page="profile"] .content>.panel h3{
+  margin-bottom:16px;
+}
+body[data-page="profile"] .content>.panel .notice{
+  margin:0 0 12px;
+  padding:13px 14px;
+  line-height:1.55;
+}
+body[data-page="profile"] .content>.panel .toolbar{
+  gap:10px;
+  margin-top:0;
+}
+body[data-page="profile"] .content>.panel .toolbar .btn{
+  min-height:44px;
+}
+@media(max-width:720px){
+  body[data-page="profile"] .content>.panel{padding:18px}
+  body[data-page="profile"] .content>.panel h3{margin-bottom:14px}
+  body[data-page="profile"] .content>.panel .notice{margin-bottom:14px}
+}
