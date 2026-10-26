@@ -1,8 +1,6 @@
 (() => {
 'use strict';
-// Bust stale GitHub Pages caches so the latest premium motion stylesheet is loaded.
-const motionStylesheet=document.querySelector('link[rel="stylesheet"][href*="css/styles.css"]');
-if(motionStylesheet)motionStylesheet.href='css/styles.css?v=20261026-mobile-header-rows2';
+// Stylesheets use a versioned URL directly in each HTML head to avoid an unstyled flash on refresh.
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 /* Mobile drawer controls: bind once, outside render(), and always keep dismissal available. */
 function closeFinanceSidebar(){
