@@ -958,3 +958,53 @@ body[data-page="settings"] .settings-list .settings-row>button.btn-danger{
     box-shadow: 0 8px 14px -14px rgba(0,0,0,.35);
   }
 }
+
+
+/* Editable profile avatar and compact profile editor dialog. */
+button.profile-avatar{
+  border:0; padding:0; overflow:hidden; cursor:pointer; font:inherit;
+  display:grid; place-items:center; flex:0 0 40px;
+}
+.profile-avatar img{display:block;width:100%;height:100%;object-fit:cover;border-radius:50%}
+.profile-avatar:focus-visible{outline:3px solid var(--green);outline-offset:3px}
+.profile-modal-backdrop{
+  position:fixed;inset:0;z-index:1000;display:grid;place-items:center;
+  padding:18px;background:rgba(7,16,12,.62);backdrop-filter:blur(6px);
+}
+.profile-modal{
+  position:relative;width:min(100%,420px);max-height:min(90dvh,680px);overflow:auto;
+  padding:26px;border:1px solid var(--line);border-radius:22px;
+  background:var(--surface);color:var(--ink);box-shadow:0 24px 90px #0004;
+  animation:profileModalEnter .2s ease-out both;
+}
+.profile-modal h2{margin:0 40px 5px 0;font-size:23px;letter-spacing:-.6px}
+.profile-modal-sub{margin:0 0 22px;color:var(--muted);font-size:13px;line-height:1.5}
+.profile-modal-close{
+  position:absolute;right:16px;top:14px;width:36px;height:36px;border-radius:10px;
+  border:1px solid var(--line);background:var(--bg);color:var(--ink);font-size:24px;cursor:pointer;
+}
+.profile-preview{
+  width:96px;height:96px;margin:0 auto 12px;border-radius:50%;
+  display:grid;place-items:center;overflow:hidden;background:var(--green);color:#fff;
+  font-size:28px;font-weight:800;box-shadow:0 0 0 5px color-mix(in srgb,var(--green) 14%,transparent);
+}
+.profile-preview img{width:100%;height:100%;object-fit:cover}
+.profile-upload-btn{
+  display:table;margin:0 auto 22px;padding:9px 13px;border:1px solid var(--line);
+  border-radius:10px;cursor:pointer;font-size:13px;font-weight:700;background:var(--bg);
+}
+.profile-field-label{display:block;margin-bottom:7px;color:var(--muted);font-size:12px;font-weight:700}
+#profileDisplayName{
+  display:block;width:100%;box-sizing:border-box;padding:12px 13px;border:1px solid var(--line);
+  border-radius:11px;background:var(--bg);color:var(--ink);font:inherit;outline:none;
+}
+#profileDisplayName:focus{border-color:var(--green);box-shadow:0 0 0 3px color-mix(in srgb,var(--green) 16%,transparent)}
+.profile-modal-actions{display:flex;justify-content:space-between;gap:10px;margin-top:20px}
+.profile-modal-actions .btn{justify-content:center}
+@keyframes profileModalEnter{from{opacity:0;transform:translateY(8px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(max-width:420px){
+ .profile-modal{padding:22px 18px;border-radius:18px}
+ .profile-modal-actions{flex-direction:column-reverse}
+ .profile-modal-actions .btn{width:100%}
+}
+@media(prefers-reduced-motion:reduce){.profile-modal{animation:none}}
