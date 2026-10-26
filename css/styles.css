@@ -1039,3 +1039,42 @@ button.profile-avatar{
 .donut-legend-row span{overflow-wrap:anywhere;color:var(--muted)}
 .donut-legend-row strong{font-size:11px;white-space:nowrap}
 @media(max-width:520px){.donut-layout{grid-template-columns:1fr}.donut-chart{width:min(70%,180px)}.donut-legend{grid-template-columns:1fr}.finance-chart .chart{height:155px}}
+
+
+/* Bills & payments: clearer row hierarchy, aligned amounts and responsive controls */
+.bill-item{
+ display:grid;grid-template-columns:52px minmax(0,1fr) auto;align-items:center;gap:14px;
+ padding:18px 0;border-bottom:1px solid var(--line);min-width:0;
+}
+.bill-item:last-child{border-bottom:0}
+.bill-date{width:52px;height:56px;border:1px solid #e3eee6;background:#f0f7f2;border-radius:13px;display:grid;align-content:center;justify-items:center;gap:3px;flex-shrink:0}
+.bill-date strong{font-size:19px;line-height:1.1;font-weight:800}
+.bill-date small{font-size:10px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted)}
+.bill-info{min-width:0;overflow-wrap:anywhere}
+.bill-info>strong{display:block;font-size:14px;font-weight:800;line-height:1.35;margin-bottom:5px}
+.bill-info>small{display:flex;flex-wrap:wrap;gap:2px;color:var(--muted);font-size:12px;line-height:1.5}
+.bill-category{font-weight:700}
+.bill-actions{display:grid;justify-items:end;gap:8px;min-width:0}
+.bill-amount{font-size:16px;font-weight:850;white-space:nowrap;font-variant-numeric:tabular-nums}
+.bill-controls{display:flex;align-items:center;gap:7px}
+.bill-controls .btn{min-height:40px;justify-content:center;white-space:nowrap;padding:9px 12px}
+.bill-controls .btn-primary{box-shadow:0 4px 10px #1d76541c}
+.bill-controls .btn-paid{background:#f3f8f5;color:var(--green);border-color:#cfe4d7}
+.bill-delete{width:40px;min-width:40px;padding:0!important;font-size:19px;line-height:1}
+.bill-item.is-paid .bill-date{background:#f2f8f4;border-color:#d7e8dc}
+.bill-item.is-paid .bill-info>strong{color:var(--ink)}
+:root[data-theme="dark"] .bill-date,:root[data-theme="dark"] .bill-item.is-paid .bill-date{background:#1d3025;border-color:var(--line)}
+:root[data-theme="dark"] .bill-controls .btn-paid{background:#1d3025;border-color:#315541;color:#9be2b5}
+@media(max-width:540px){
+ .bill-item{grid-template-columns:46px minmax(0,1fr);gap:11px;padding:15px 0}
+ .bill-date{width:46px;height:52px}
+ .bill-actions{grid-column:2;display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;margin-top:1px}
+ .bill-amount{font-size:15px}
+ .bill-controls{gap:6px}
+ .bill-controls .btn{min-height:38px;padding:8px 10px}
+ .bill-delete{width:38px;min-width:38px}
+}
+@media(max-width:360px){
+ .bill-actions{align-items:flex-start;flex-direction:column}
+ .bill-controls{width:100%}
+}
