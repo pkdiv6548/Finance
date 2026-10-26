@@ -850,3 +850,81 @@ body[data-page="settings"] .settings-list .settings-row>button.btn-danger{
     transform: none !important;
   }
 }
+
+
+/* Sidebar polish v20261026: prevent clipped hover states and scroll Workspace navigation only. */
+.sidebar{
+  display:flex!important;
+  flex-direction:column!important;
+  height:100vh!important;
+  height:100dvh!important;
+  min-height:0!important;
+  overflow:hidden!important;
+  gap:22px!important;
+}
+.sidebar>.brand{
+  flex:0 0 auto!important;
+  position:relative!important;
+  z-index:2;
+}
+.sidebar>div:nth-child(2){
+  display:flex!important;
+  flex:1 1 0!important;
+  flex-direction:column!important;
+  min-height:0!important;
+  overflow:hidden!important;
+  gap:0!important;
+}
+.sidebar>div:nth-child(2)>.nav-label{
+  flex:0 0 auto!important;
+  margin-bottom:8px!important;
+}
+.sidebar nav.nav-list{
+  display:flex!important;
+  flex:1 1 0!important;
+  flex-direction:column!important;
+  min-height:0!important;
+  height:0!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  overscroll-behavior-y:contain!important;
+  -webkit-overflow-scrolling:touch!important;
+  scrollbar-width:thin;
+  align-content:initial!important;
+  padding:0 5px 14px 0!important;
+  margin:0!important;
+  gap:5px!important;
+}
+.sidebar nav.nav-list>.nav-link{
+  flex:0 0 auto!important;
+  width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  transform:none!important;
+  box-sizing:border-box!important;
+  overflow:visible!important;
+  transition:background-color .2s ease,color .2s ease,border-color .2s ease,box-shadow .2s ease!important;
+}
+.sidebar nav.nav-list>.nav-link:hover{
+  transform:none!important;
+  border-color:color-mix(in srgb,var(--green) 24%,transparent)!important;
+  box-shadow:inset 3px 0 var(--green),0 3px 10px #183a2608!important;
+}
+.sidebar nav.nav-list>.nav-link.active{
+  transform:none!important;
+  box-shadow:inset 3px 0 var(--green)!important;
+}
+.sidebar>.sidebar-note{
+  flex:0 0 auto!important;
+  margin-top:0!important;
+}
+:root[data-theme="dark"] .sidebar>.brand{background:var(--bg)!important}
+@media(max-width:720px){
+  .sidebar{gap:18px!important;padding:20px 16px 12px!important}
+  .sidebar.open{overflow:hidden!important}
+  .sidebar.open>div:nth-child(2){flex:1 1 0!important;min-height:0!important;height:0!important}
+  .sidebar.open nav.nav-list{height:0!important;min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .sidebar nav.nav-list>.nav-link{transition:none!important}
+}
