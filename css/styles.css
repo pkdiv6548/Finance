@@ -928,3 +928,17 @@ body[data-page="settings"] .settings-list .settings-row>button.btn-danger{
 @media(prefers-reduced-motion:reduce){
   .sidebar nav.nav-list>.nav-link{transition:none!important}
 }
+
+
+/* Keep sidebar navigation scrollable while hiding the visible scrollbar. */
+.sidebar nav.nav-list,
+.sidebar.open nav.nav-list{
+  scrollbar-width:none!important;
+  -ms-overflow-style:none!important;
+}
+.sidebar nav.nav-list::-webkit-scrollbar,
+.sidebar.open nav.nav-list::-webkit-scrollbar{
+  width:0!important;
+  height:0!important;
+  display:none!important;
+}
