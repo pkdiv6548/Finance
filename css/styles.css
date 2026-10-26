@@ -942,3 +942,19 @@ body[data-page="settings"] .settings-list .settings-row>button.btn-danger{
   height:0!important;
   display:none!important;
 }
+
+
+/* Mobile: keep the complete page header visible while the content scrolls underneath. */
+@media (max-width: 720px) {
+  .main > .topbar {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 25 !important;
+    background: var(--bg) !important;
+    padding: 10px 0 12px !important;
+    margin-top: -12px !important;
+    margin-bottom: 14px !important;
+    border-bottom: 1px solid color-mix(in srgb, var(--line) 75%, transparent) !important;
+    box-shadow: 0 8px 14px -14px rgba(0,0,0,.35);
+  }
+}
