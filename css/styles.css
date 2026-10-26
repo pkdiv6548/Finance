@@ -728,3 +728,58 @@ body[data-page="settings"] .settings-list .settings-row>button.btn-danger{
   .top-actions .btn { padding: 7px 8px !important; font-size: 13px !important; }
   .page-title { font-size: clamp(21px, 6vw, 25px) !important; }
 }
+
+
+/* Mobile header arrangement requested: title/menu + theme/profile on row 1;
+   Add transaction alone on row 2. Hide install and language controls on mobile. */
+@media (max-width: 720px) {
+  .topbar {
+    display: grid !important;
+    grid-template-columns: minmax(0,1fr) auto auto !important;
+    grid-template-rows: auto auto !important;
+    column-gap: 8px !important;
+    row-gap: 8px !important;
+    align-items: center !important;
+  }
+  .topbar > div:first-child {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    min-width: 0 !important;
+  }
+  .top-actions { display: contents !important; }
+  #themeToggle {
+    display: inline-flex !important;
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    align-self: center !important;
+    width: 42px !important;
+    min-width: 42px !important;
+    height: 42px !important;
+    min-height: 42px !important;
+    padding: 0 !important;
+    justify-content: center !important;
+  }
+  #languageToggle, #installApp { display: none !important; }
+  #quickAdd {
+    display: inline-flex !important;
+    grid-column: 1 / -1 !important;
+    grid-row: 2 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 42px !important;
+    justify-content: center !important;
+    padding: 9px 12px !important;
+  }
+  .top-actions .avatar {
+    display: inline-flex !important;
+    grid-column: 3 !important;
+    grid-row: 1 !important;
+    align-self: center !important;
+    width: 42px !important;
+    min-width: 42px !important;
+    height: 42px !important;
+    flex: none !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+}
