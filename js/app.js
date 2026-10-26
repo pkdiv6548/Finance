@@ -258,7 +258,7 @@ $('#content').innerHTML='<section class="panel currency-panel"><div class="panel
    if(!response.ok)throw Error('World Bank data unavailable');
    const payload=await response.json();
    if(!Array.isArray(payload)||!Array.isArray(payload[1]))throw Error('Invalid World Bank response');
-   const record=payload[1].find(row=>row.value!==null&&Number.isFinite(Number(row.value))&&/^\\d{4}$/.test(String(row.date)));
+   const record=payload[1].find(row=>row.value!==null&&Number.isFinite(Number(row.value))&&/^\d{4}$/.test(String(row.date)));
    if(!record)throw Error('No indicator data');
    const data={value:Number(record.value),year:String(record.date),savedAt:Date.now()};
    try{localStorage.setItem(key,JSON.stringify(data))}catch(_){}
