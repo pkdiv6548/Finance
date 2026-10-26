@@ -1,0 +1,129 @@
+/* Finance card interaction — inspired by the supplied reference recording.
+   Soft cursor-following spotlight, subtle perspective tilt, and a glassy highlight. */
+:root {
+  --finance-card-spot-x: 50%;
+  --finance-card-spot-y: 50%;
+}
+.main .panel,
+.main .stat-card,
+.main .tx-stat,
+.main .goal-item,
+.main .bill-item,
+.main .chart-card,
+.main .summary-card,
+.main .metric-card,
+.main .card {
+  position: relative;
+  isolation: isolate;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+.main .panel::before,
+.main .stat-card::before,
+.main .tx-stat::before,
+.main .goal-item::before,
+.main .chart-card::before,
+.main .summary-card::before,
+.main .metric-card::before,
+.main .card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    360px circle at var(--finance-card-spot-x) var(--finance-card-spot-y),
+    rgba(112, 195, 146, .17),
+    rgba(112, 195, 146, .055) 34%,
+    transparent 72%
+  );
+  transition: opacity .28s ease;
+}
+.main .panel::after,
+.main .stat-card::after,
+.main .tx-stat::after,
+.main .goal-item::after,
+.main .chart-card::after,
+.main .summary-card::after,
+.main .metric-card::after,
+.main .card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(115deg, transparent 15%, rgba(255,255,255,.22) 48%, transparent 68%);
+  transform: translateX(-115%);
+}
+.main .panel > *,
+.main .stat-card > *,
+.main .tx-stat > *,
+.main .goal-item > *,
+.main .chart-card > *,
+.main .summary-card > *,
+.main .metric-card > *,
+.main .card > * {
+  position: relative;
+  z-index: 2;
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .main .panel,
+  .main .stat-card,
+  .main .tx-stat,
+  .main .goal-item,
+  .main .chart-card,
+  .main .summary-card,
+  .main .metric-card,
+  .main .card {
+    transition: transform .22s cubic-bezier(.2,.7,.2,1), box-shadow .25s ease, border-color .25s ease;
+    will-change: transform;
+  }
+  .main .panel:hover::before,
+  .main .stat-card:hover::before,
+  .main .tx-stat:hover::before,
+  .main .goal-item:hover::before,
+  .main .chart-card:hover::before,
+  .main .summary-card:hover::before,
+  .main .metric-card:hover::before,
+  .main .card:hover::before { opacity: 1; }
+  .main .panel:hover::after,
+  .main .stat-card:hover::after,
+  .main .tx-stat:hover::after,
+  .main .goal-item:hover::after,
+  .main .chart-card:hover::after,
+  .main .summary-card:hover::after,
+  .main .metric-card:hover::after,
+  .main .card:hover::after {
+    opacity: 1;
+    animation: financeCardSheen .8s ease both;
+  }
+}
+:root[data-theme="dark"] .main .panel::before,
+:root[data-theme="dark"] .main .stat-card::before,
+:root[data-theme="dark"] .main .tx-stat::before,
+:root[data-theme="dark"] .main .goal-item::before,
+:root[data-theme="dark"] .main .chart-card::before,
+:root[data-theme="dark"] .main .summary-card::before,
+:root[data-theme="dark"] .main .metric-card::before,
+:root[data-theme="dark"] .main .card::before {
+  background: radial-gradient(360px circle at var(--finance-card-spot-x) var(--finance-card-spot-y), rgba(104, 210, 151, .18), rgba(104,210,151,.055) 36%, transparent 72%);
+}
+@keyframes financeCardSheen {
+  from { transform: translateX(-115%); }
+  to { transform: translateX(115%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .main .panel, .main .stat-card, .main .tx-stat, .main .goal-item,
+  .main .chart-card, .main .summary-card, .main .metric-card, .main .card {
+    transition: none !important;
+    transform: none !important;
+    will-change: auto !important;
+  }
+  .main .panel::after, .main .stat-card::after, .main .tx-stat::after,
+  .main .goal-item::after, .main .chart-card::after, .main .summary-card::after,
+  .main .metric-card::after, .main .card::after { animation: none !important; }
+}
