@@ -1137,3 +1137,74 @@ button.profile-avatar{
  .main>.content>.split{grid-template-columns:minmax(0,1fr)}
  .toolbar a.btn{width:100%}
 }
+
+
+/* Profile + SIP cards: consistent spacing and responsive form layout. */
+.profile-card,
+.profile-panel,
+[data-page="profile"] .panel {
+  min-width: 0;
+}
+[data-page="profile"] .notice {
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+[data-page="profile"] .panel .actions,
+[data-page="profile"] .panel .button-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+[data-page="calculators"] #sipForm {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: end;
+  gap: 16px;
+}
+[data-page="calculators"] #sipForm .field {
+  min-width: 0;
+  margin: 0;
+}
+[data-page="calculators"] #sipForm label {
+  display: block;
+  min-height: 2.8em;
+  line-height: 1.4;
+  margin-bottom: 8px;
+  overflow-wrap: anywhere;
+}
+[data-page="calculators"] #sipForm input {
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+}
+[data-page="calculators"] #sipForm button {
+  grid-column: 1 / -1;
+  width: 100%;
+  min-height: 46px;
+  margin: 0;
+}
+[data-page="calculators"] #sipOut {
+  margin-top: 12px;
+  line-height: 1.6;
+}
+[data-page="calculators"] .panel {
+  min-width: 0;
+}
+@media (max-width: 520px) {
+  [data-page="calculators"] #sipForm {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+  [data-page="calculators"] #sipForm label {
+    min-height: 0;
+  }
+  [data-page="calculators"] #sipForm button {
+    grid-column: 1;
+  }
+  [data-page="profile"] .panel .actions,
+  [data-page="profile"] .panel .button-row {
+    gap: 10px;
+  }
+}
