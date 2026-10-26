@@ -1110,3 +1110,30 @@ button.profile-avatar{
 .currency-disclaimer{margin:12px 0 0}
 :root[data-theme="dark"] .currency-result{background:#192c20;border-color:#315541}
 @media(max-width:520px){.currency-submit{flex-wrap:wrap}.currency-result{padding:15px}}
+
+
+/* Profile and calculator layout fixes (2026-10-26) */
+.toolbar a.btn{text-decoration:none;justify-content:center;min-height:44px}
+.toolbar a.btn:focus-visible{text-decoration:none}
+.profile-modal-backdrop{z-index:100}
+.profile-modal{max-width:min(480px,calc(100vw - 28px));max-height:calc(100dvh - 32px);overflow:auto}
+.economic-panel .stat-grid{grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch}
+.economic-panel .stat-card{min-width:0;overflow-wrap:anywhere}
+.economic-panel .stat-value{font-size:clamp(18px,1.7vw,25px);overflow-wrap:anywhere}
+.main>.content>.split{grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);align-items:stretch}
+.main>.content>.split>.panel{min-width:0;display:flex;flex-direction:column}
+.main>.content>.split>.panel form{flex:1;align-content:start}
+.main>.content>.split>.panel .notice{margin-top:auto}
+#emiForm .field.full,#sipForm .field.full{grid-column:1/-1}
+#emiForm button,#sipForm button,#ciForm button{width:100%;min-height:44px;justify-content:center}
+#ciForm .field.full{grid-column:1/-1}
+.currency-disclaimer{line-height:1.6;max-width:78ch}
+@media(max-width:1100px){
+ .economic-panel .stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .main>.content>.split{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:760px){
+ .economic-panel .stat-grid{grid-template-columns:1fr}
+ .main>.content>.split{grid-template-columns:minmax(0,1fr)}
+ .toolbar a.btn{width:100%}
+}
