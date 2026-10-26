@@ -596,3 +596,51 @@ body[data-page="settings"] .settings-list .settings-row>button.btn-danger{
   .progress>span,.progress span,.progress-bar>span,.budget-progress>span,.goal-progress>span,
   .progress span::after,.progress>span::after{animation:none!important;transform:none!important}
 }
+
+
+/* FINAL FIX: percentage fill must follow the inline width exactly. */
+.progress > span,
+.progress span,
+.progress-bar > span,
+.budget-progress > span,
+.goal-progress > span {
+  animation: none !important;
+  transform: none !important;
+  flex: 0 0 auto;
+}
+.progress { isolation: isolate; }
+.progress > span,
+.progress span {
+  position: relative;
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+}
+.progress > span::after,
+.progress span::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100% !important;
+  height: 100%;
+  background: linear-gradient(110deg, transparent 0%, #ffffff00 32%, #ffffff85 50%, #ffffff00 68%, transparent 100%) !important;
+  background-size: 220% 100% !important;
+  animation: ultraShine 2.8s linear infinite !important;
+  pointer-events: none;
+}
+/* Keep a clear gap between create-budget and budget-management cards. */
+.budget-management-column > .panel:first-child {
+  margin-bottom: 20px !important;
+}
+/* Fit the Actions column to its Remove button. */
+.budget-management-table { width: 100%; table-layout: auto; }
+.budget-management-table th:last-child,
+.budget-management-table td:last-child { width: 1%; white-space: nowrap; }
+.budget-management-table th:last-child { text-align: right; }
+@media (max-width: 720px) {
+  .budget-management-column > .panel:first-child { margin-bottom: 20px !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .progress > span::after, .progress span::after { animation: none !important; }
+}
